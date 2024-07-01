@@ -1,0 +1,120 @@
+.general   {
+    font-family: Tahoma;
+    font-size : 9pt;
+    color: black;;
+    text-decoration: none;
+    link:#000000;
+    vlink:#000000;
+    alink:#000000;}
+.generalmembers   {
+    font-family: Tahoma;
+    font-size : 8pt;
+	color: black;;
+	text-decoration: none;
+	link="#000000";
+    vlink="#000000";
+    alink="#000000";}
+.generalblue   {
+    text-decoration: none;
+	font-family: Tahoma;
+    font-size :9pt;
+	color: #0066CC;
+	link="#0066CC";
+    vlink="#0066CC";
+    alink="#0066CC";
+	}
+.generalbluebold   {
+    text-decoration: none;
+	font-family: Tahoma;
+    font-size : 9pt;
+	color: #0066CC;
+	font-weight: Bold;
+	link="#0066CC";
+    vlink="#0066CC";
+    alink="#0066CC";
+	}
+.generalredbold   {
+    text-decoration: none;
+	font-family: Tahoma;
+    font-size : 9pt;
+	color: #FF0000;
+	font-weight: Bold;
+	link="#FF0000";
+    vlink="#FF0000";
+    alink="#FF0000";
+	}
+.generalblancomenu   {
+    background:#0066CC;
+	text-decoration: none;
+	font-family: Tahoma;
+    font-size : 9pt;
+	color: #FFFFFF;
+	link="#FFFFFF";
+    vlink="#FFFFFF";
+    alink="#FFFFFF"}
+.submited   {
+    font-family: Tahoma;
+    font-size : 7pt;
+	color: black;}
+
+.titlenew   {
+    font-family: Tahoma;
+    font-size : 10pt;
+    color: #0066CC;
+    font-weight: Bold;
+}	
+
+H1   { color   :#06C ;
+font-weight   : Tahoma;
+font-size : 14pt;
+line-height   : 14pt;
+font-family   : Tahoma;}  
+
+H2   { color     :#06C ;
+font-weight   : Tahoma;
+font-size : 12pt;
+line-height   : 12pt;
+font-family   : Tahoma;}  
+H3   { color     :#06C ;
+font-weight   : Tahoma;
+font-size : 10pt;
+line-height   : 12pt;
+font-family   : Tahoma;} 
+
+.hiperv {
+  font-size : 9pt;
+  text-decoration: none; 
+  color: #0066CC;
+  font-weight   : Tahoma;
+  font-family   : Tahoma;
+  link="#0066CC";
+  vlink="#0066CC";
+  alink="#0066CC";
+  font-weight: Bold;
+   }
+.hipervblack {
+  text-decoration: none;
+  font-size : 9pt;
+  font-weight: Bold;
+  text-decoration: none; 
+  color: #000000;
+  font-weight   : Tahoma;
+  font-family   : Tahoma;
+  link="#000000";
+  vlink="#000000";
+  alink="#000000";
+   }
+   
+.hipervsbold {
+  font-size : 9pt; 
+  color: #0066CC;
+  font-weight   : Tahoma;
+  font-family   : Tahoma;
+  link="#0066CC";
+  vlink="#0066CC";
+  alink="#0066CC";
+  font-weight: Bold;
+   }
+   
+
+

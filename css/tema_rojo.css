@@ -1,0 +1,105 @@
+body{
+color: #000;
+background-color: #fff;
+}
+
+div#estado a{
+color: #C03;
+}
+
+div#top{
+color: #fff;
+background-image: url(../img/uah_logo_rojo.jpg);
+}
+
+div#titulo{
+background-image: url(../img/depeca_logo_rojo_resized.jpg);
+background-position: right center;
+}
+
+div#menu, div#top{
+background-color: #C03;
+}
+
+div#menu2{
+background-image: url(../img/media.jpg);
+}
+
+div#herramientas, div#estado{
+background-color: #b9afa5;
+}
+
+div#menu{
+color: #fff;
+}
+
+div.menu-item, div.menu-item-sel{
+border-color: #fff;
+}
+
+div.menu-item a{
+color: #fff;
+}
+
+div.menu-item a:hover{
+color: #333;
+}
+
+div.menu-item-sel{
+border-color: #dcc891;
+}
+
+div.menu-item-sel a{
+color: #dcc891;
+}
+
+div.herramientas-item, div.herramientas-item-sel{
+color: #fff;
+border-color: #fff;
+}
+
+div.herramientas-item-sel {
+border-color: #C03;
+color: #C03;
+}
+
+div.herramientas-item-sel a{
+color: #C03;
+}
+
+div.herramientas-item a{
+color: #fff;
+}
+
+div.herramientas-item a:hover{
+color: #C03;
+}
+
+div#contenido-total{
+background: #fff;
+}
+
+div#contenido a{
+color: #C03;
+}
+
+div#titulo-contenido{
+color: #fff;
+background-color: #C03;
+border-color: #fff;
+}
+
+div.firstletter{
+float: left;
+}
+
+div#contenido img{
+border-color: #000;
+}
+
+span.importante{
+color: #D00;
+}
+
+
+
