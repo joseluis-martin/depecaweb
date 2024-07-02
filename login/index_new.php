@@ -3,7 +3,7 @@
 
 require_once("../core/biblioteca.inc.new.php");
 
-arriba("privada", "", "es", "Zona Privada");
+//arriba("privada", "", "es", "Zona Privada");
 
 ?>
 
@@ -47,5 +47,5 @@ arriba("privada", "", "es", "Zona Privada");
 <p>&nbsp;</p>
 
 <?php
-abajo();
+//abajo();
 ?>
