@@ -1,0 +1,1 @@
+Se han empezado a modificar los archivos de la Intranet de DEPECA, pero la versión de php que utiliza el servidor no permite implantar ninguno de estos cambios. Los archivos modificados llevan la palabra new en el nombre.
