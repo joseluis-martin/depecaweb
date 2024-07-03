@@ -543,13 +543,13 @@ if($nif_prof!='' && $nif_prof!='nada'){
 	   echo" <td align='left' width='6%'><font><strong>Cargo:</strong></font></td><td align='left' width='14%'>".$row_prof['cargo']."</td>";	    
 
 
-	    echo "<td align='left'width='6%'><font><strong>Departamento:</strong></font></td><td align='left' width='14%'>".$row_prof['departamento']."</td>";
+	    echo "<td align='left'width='6%'><font><strong>Departamento:</strong></font></td><td align='left' width='14%'>".$row_prof['departamento']."</td> </tr>";
 
 	    echo "<tr><td width='6%'></td>";
 	    echo "<td align='left' width='6%'><font><strong>NIF:</strong></font></td><td align='left' width='14%'>".$row_prof['nif']."</td>";
 	    echo "<td align='left' width='6%'><font><strong>Tlf Univ:</strong></font></td><td align='left' width='14%'>".$row_prof['telefono_universidad']."</td>";
 	    echo "<td align='left' width='6%'><font><strong>Despacho:</strong></font></td><td align='left' width='14%'>".$row_prof['despacho']."</td>";
-	    echo "<td align='left'width='6%'><font><strong>Email:</strong></font></td><td align='left' width='14%'>".$row_prof['email']."</td>";
+	    echo "<td align='left'width='6%'><font><strong>Email:</strong></font></td><td align='left' width='14%'>".$row_prof['email']."</td> </tr>";
 
 		
 /* Modificación jlmartin para gestionar la carga del rectorado 2/10/2018*/
@@ -610,30 +610,6 @@ if($nif_prof!='' && $nif_prof!='nada'){
 			echo "<td align='left' width='6%'><font><strong>Carga M&aacute;x.:</strong></font></td>";echo"<td align='left' width='14%'>".$cargamax."</td>";
 	    }
 
-/* Modificación jlmartin para gestionar la horas bajo umbral 2/10/2018*/
-		
-		if (acceso_nivel($nivel,$user))
-	    {
-	    	echo "<td align='left' width='6%'><font><strong>H.Bajo Umbral:</strong></font></td><td align='left' width='14%'><textarea name='horasbajoumbral' cols='4' rows='1'>".$horasbajoumbral."</textarea></td>";
-			
-		}
-		else{
- 			echo "<td align='left' width='6%'><font><strong>H.Bajo Umbral:</strong></font></td><td align='left' width='14%'>".$horasbajoumbral."</td>";
-		}
-		
-		
-		if (acceso_nivel($nivel,$user))
-	    {
-	    	echo "<td align='left' width='6%'><font><strong>H.Bajo Umbral Max:</strong></font></td><td align='left' width='14%'><textarea name='horasbajoumbralmax' cols='4' rows='1'>".$horasbajoumbralmax."</textarea></td>";
-			
-		}
-		else{
- 			echo "<td align='left' width='6%'><font><strong>H.Bajo Umbral Max:</strong></font></td><td align='left' width='14%'>".$horasbajoumbralmax."</td>";
-		}
-		
-/*	    echo "<td align='left'width='6%'><font><strong>F. Alta Universidad:</strong></font></td><td align='left' width='14%'>".$row_prof['falta_univ']."</td>"; */
-		
-/* Fin modificación jlmartin para gestionar la horas bajo umbral 2/10/2018*/
 
 		
 /* Añadido de jlmartin para calcular el % de carga según Rectorado 02/10/2018*/
@@ -647,13 +623,12 @@ if($nif_prof!='' && $nif_prof!='nada'){
 
 		
 		$cargarect=calcular_carga_rect($nif_prof,$cargarectorado,$curso_recibido);
-		echo "<tr><td width='10%'></td>";
 	    echo "<td align='left' width='6%'><font><strong>Carga Rectorado:</strong></font></td><td align='left' width='14%'>".$cargarect."%</td>";
 		
 /* Fin del ñadido de jlmartin para calcular el % de carga según Rectorado 02/10/2018*/		
 
 	    $cargareal=calcular_carga_real($nif_prof,$cargamax,$curso_recibido);
-	    echo "<td align='left' width='6%'><font><strong>Carga Actual:</strong></font></td><td align='left' width='14%'>".$cargareal."%</td>";
+	    echo "<td align='left' width='6%'><font><strong>Carga Actual:</strong></font></td><td align='left' width='14%'>".$cargareal."%</td> </tr>";
 
 	    $sql_carga_max2 = "select * from cargas_max where nif='$nif_prof' and curso='$curso_recibido_ant'";	    
 	    $resul_carga_max2 = mysql_query($sql_carga_max2, $link);
@@ -668,6 +643,8 @@ if($nif_prof!='' && $nif_prof!='nada'){
 		$row_profesores=mysql_fetch_array($resul_profesores); 
 		$cargaant=$row_profesores['carga_real'];
 	    }*/
+
+		echo "<tr><td width='10%'></td>";
 	    echo "<td align='left' width='6%'><font><strong>Carga 1 Curso Antes:</strong></font></td><td align='left' width='14%'>".$cargaant."%</td>";
 
 		$sql_carga_max3 = "select * from cargas_max where nif='$nif_prof' and curso='$curso_recibido_2ant'";	    
@@ -682,19 +659,13 @@ if($nif_prof!='' && $nif_prof!='nada'){
 		$row_profesores=mysql_fetch_array($resul_profesores); 
 		$carga2ant=$row_profesores['carga_anterior'];
 	    }*/
-	    echo "<td align='left'width='6%'><font><strong>Carga 2 Cursos Antes:</strong></font></td><td align='left' width='14%'>".$carga2ant."%</td><td width='10%'></td></tr>";
+	    echo "<td align='left'width='6%'><font><strong>Carga 2 Cursos Antes:</strong></font></td><td align='left' width='14%'>".$carga2ant."%</td>";
 	    
-		
-		echo "<tr><td width='10%'></td>";
-	   	echo "<td align='left' width='6%'></td><td align='left' width='14%'></td>";
-		
 		$carga_media=calcular_carga_media($curso_recibido);
 		echo "<td align='left' width='6%'><font><strong>Carga media Dpto.:</strong></font></td><td align='left' width='14%'>".$carga_media."%</td>";
 
 	   	$carga_media_rect=calcular_carga_media_rect($curso_recibido);
-		echo "<td align='left' width='6%'><font><strong>Carga media Rect.:</strong></font></td><td align='left' width='14%'>".$carga_media_rect."%</td>";	    
-
-	    echo "<td align='left' width='6%'></td><td align='left' width='14%'></td></tr>";
+		echo "<td align='left' width='6%'><font><strong>Carga media Rect.:</strong></font></td><td align='left' width='14%'>".$carga_media_rect."%</td></tr>";	    
 		
 		echo "</table>";
 
