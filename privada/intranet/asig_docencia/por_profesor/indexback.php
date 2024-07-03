@@ -47,11 +47,12 @@ HEJ1C_totales, HEJ2C_totales,HT1EC_totales,HL1EC_totales,HT2EC_totales,
 HL2EC_totales,HEJ1EC_totales,HEJ2EC_totales FROM horas_docencia WHERE cod_asig
 IN (SELECT codigo FROM asignaturas WHERE (semestre<5 AND codigo_titulacion = 'G37') OR (semestre>4 AND (codigo_titulacion = 'G35' OR codigo_titulacion = 'G37' OR
 codigo_titulacion = 'G38' OR codigo_titulacion = 'G39')) OR codigo_titulacion =
-'G430' OR codigo_titulacion = 'G60' OR codigo_titulacion = 'G652'
+'G430' OR codigo_titulacion =
+'G59' OR codigo_titulacion = 'G60' OR codigo_titulacion = 'G652'
  OR codigo_titulacion = 'M076'  OR codigo_titulacion = 'M125' OR codigo_titulacion = 'M141 'OR
 codigo_titulacion = '00' OR codigo_titulacion = '01' OR 
-codigo_titulacion = '02' OR codigo_titulacion = 'M888' OR codigo_titulacion = 'M180' OR codigo_titulacion = 'G591' OR codigo_titulacion = 'G781' OR codigo_titulacion =
-'G610' OR codigo_titulacion ='G53') AND curso = '$curso'";
+codigo_titulacion = '02' OR codigo_titulacion = 'M888' OR codigo_titulacion = 'M180' OR codigo_titulacion = 'G591' OR codigo_titulacion = 'G781') AND curso = '$curso'";	
+
 
 
 $resul_horas = mysql_query($sql_horas, $link);
@@ -108,19 +109,18 @@ while ($row_cargas = mysql_fetch_array($resul_cargas))
     $suma_cargas=$suma_cargas+$row_cargas['carga_rectorado'];
     }
 }
-
+	
 $sql_horas="SELECT
 cod_asig,curso,HT1C_totales,HL1C_totales,HT2C_totales,HL2C_totales,
 HEJ1C_totales, HEJ2C_totales,HT1EC_totales,HL1EC_totales,HT2EC_totales,
 HL2EC_totales,HEJ1EC_totales,HEJ2EC_totales FROM horas_docencia WHERE cod_asig
 IN (SELECT codigo FROM asignaturas WHERE (semestre<5 AND codigo_titulacion = 'G37') OR (semestre>4 AND (codigo_titulacion = 'G35' OR codigo_titulacion = 'G37' OR
 codigo_titulacion = 'G38' OR codigo_titulacion = 'G39')) OR codigo_titulacion =
-'G430' OR codigo_titulacion = 'G60' OR codigo_titulacion = 'G652'
+'G430' OR codigo_titulacion =
+'G59' OR codigo_titulacion = 'G60' OR codigo_titulacion = 'G652'
  OR codigo_titulacion = 'M076'  OR codigo_titulacion = 'M125' OR codigo_titulacion = 'M141 'OR
 codigo_titulacion = '00' OR codigo_titulacion = '01' OR 
-codigo_titulacion = '02' OR codigo_titulacion = 'M888' OR codigo_titulacion = 'M180' OR codigo_titulacion = 'G591' OR codigo_titulacion = 'G781' OR codigo_titulacion =
-'G610' OR codigo_titulacion ='G53') AND curso = '$curso'";
-
+codigo_titulacion = '02' OR codigo_titulacion = 'M888' OR codigo_titulacion = 'M180' OR codigo_titulacion = 'G591' OR codigo_titulacion = 'M781') AND curso = '$curso'";	
 
 $resul_horas = mysql_query($sql_horas, $link);
 $suma_horas=0;
