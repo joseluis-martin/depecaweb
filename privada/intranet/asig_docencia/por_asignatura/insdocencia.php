@@ -56,7 +56,7 @@ if ($cuenta>1)
 {
     $sqlactualizar="UPDATE horas_asignatura SET ht1c_totales='$ht1casig', hl1c_totales='$hl1casig', ht2c_totales='$ht2casig',hl2c_totales='$hl2casig', hej1c_totales='$hej1casig', hej2c_totales='$hej2casig',ht1ec_totales='$ht1casige', hl1ec_totales='$hl1casige', ht2ec_totales='$ht2casige',hl2ec_totales='$hl2casige', hej1ec_totales='$hej1casige', hej2ec_totales='$hej2casige' WHERE cod_asig='$cod_asig' and curso='$curso'";
     $resulactualizar=mysql_query($sqlactualizar,$link);
-echo $sqlactualizar;
+// echo $sqlactualizar;
 }
 else
 {
@@ -121,7 +121,7 @@ $hej1cprofe4=$_POST['hej1cprofe4'];
 $hej2cprofe4=$_POST['hej2cprofe4'];
 $hl2cprofe4=$_POST['hl2cprofe4'];
 
-echo($profesor1);
+//echo($profesor1);
 
 if(!existeProfesor($responsable,$cod_asig)){// && $profesor1=="nada" && $profesor2=="nada" && $profesor3=="nada" && $profesor4=="nada" ){
         $sqlresponsable="UPDATE profesorado SET coordinador='0' WHERE codigo_asignatura='$cod_asig' AND coordinador='1'";
@@ -150,7 +150,7 @@ if($profesor1!="nada")
     $sql="INSERT INTO horas_docencia (nif,cod_asig,curso,HT1C_totales,HL1C_totales,HT2C_totales,HL2C_totales,HEJ1C_totales,HEJ2C_totales,HT1EC_totales,HL1EC_totales,HT2EC_totales,HL2EC_totales,HEJ1EC_totales,HEJ2EC_totales) VALUES ('$profesor1','$cod_asig','$curso','$ht1cprof1','$hl1cprof1','$ht2cprof1','$hl2cprof1','$hej1cprof1','$hej2cprof1','$ht1cprofe1','$hl1cprofe1','$ht2cprofe1','$hl2cprofe1','$hej1cprofe1','$hej2cprofe1')";
     $resul=mysql_query($sql,$link);
     
-        echo $sql;
+        //echo $sql;
         echo "<br>\n";
 
     $sql_profesores= "select * from personal where nif='$profesor1'";	    
@@ -306,8 +306,8 @@ for($k=1; $k<$indice ; $k++)
 	//actualizamos
 	$sqlhoras="UPDATE horas_docencia SET HT1C_totales='$ht1c', HL1C_totales='$hl1c', HT2C_totales='$ht2c', HL2C_totales='$hl2c',HEJ1C_totales='$hej1c',HEJ2C_totales='$hej2c',HT1EC_totales='$ht1ec', HL1EC_totales='$hl1ec', HT2EC_totales='$ht2ec', HL2EC_totales='$hl2ec',HEJ1EC_totales='$hej1ec',HEJ2EC_totales='$hej2ec' where curso='$curso' and nif='$nif' and cod_asig='$cod_asig'";
 	$resulhoras=mysql_query($sqlhoras,$link);
-echo "<br>\n";
-echo $sqlhoras;
+    echo "<br>\n";
+    // echo $sqlhoras;
     }
     else
     {
