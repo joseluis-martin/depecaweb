@@ -97,6 +97,10 @@ while ($row_horas = mysql_fetch_array($resul_horas))
     $suma_horas=$suma_horas+$ht1c+$hl1c+$ht2c+$hl2c+$hej1c+$hej2c+$ht1ec+$hl1ec+$ht2ec+$hl2ec+$hej1ec+$hej2ec;       
 }
 $carga_media=round(($suma_horas/$suma_cargas)*100,2);
+echo $suma_horas;
+echo "<br>";
+echo $suma_cargas;
+echo "<br>";
 return $carga_media;
 }
 
@@ -221,6 +225,7 @@ while ($row_cod_asig = mysql_fetch_array($resul_cod_asig))
 }
 $carga_real=round(($suma/$cargamax)*100,2);
 
+
  return $carga_real;
 }
 
@@ -343,8 +348,9 @@ function generar_desplegable_prof($resul_profesores,$curso,$curso_ant,$nivel,$us
 	}
 	    
 	$link=Conectarse();
-	$sql_profesores= "select * from personal where cargo!='PAS' order by apellidos";	    
+	$sql_profesores= "select p.* FROM personal p JOIN cargas_max cm ON p.nif = cm.nif WHERE p.cargo != 'PAS' AND ((cm.situacion_academica = 'ACTIVO' OR cm.situacion_academica = 'SABATICO') AND curso = '$curso') ORDER BY p.apellidos, p.nombre";	    
 	$resul_profesores = mysql_query($sql_profesores, $link);
+	$numero_elementos=mysql_num_rows($resul_profesores);
 	
 	for($i=0;$i<$numero_elementos;$i++)
 	{
@@ -486,7 +492,7 @@ $section1_start = get_microtime();
 
 <div align="center">
 <p><font color="#0066CC" face="Arial"><strong>SELECCIONAR PROFESOR <? echo "curso: "; echo $curso_recibido; ?></strong></font></p>
-<form name='form1' method='post' action='index.php' enctype='multipart/form-data' >
+<form name='form1' method='post' action='indexquick.php' enctype='multipart/form-data' >
 <table width="96%" height="80" border="0" bordercolor="#FFFFCC">
 <tr> 
 <td colspan="4" align="center"><input type="hidden" name="profesor"><font size="2" face="Arial" color="#0073B4"><b>Profesor: &nbsp;</b></font><? generar_desplegable_prof($resul_profesores,$curso_recibido,$curso_recibido_ant,$nivel,$user); ?></td>
@@ -505,7 +511,7 @@ else
 <?
 $section1_end = get_microtime();
 $section1_elapsed = $section1_end - $section1_start;
-//echo "Tiempo transcurrido en la seccion 1: " . $section1_elapsed . " segundos<br>";
+echo "Tiempo transcurrido en la seccion 1: " . $section1_elapsed . " segundos<br>";
 ?>
 
 <br><hr></hr><br>

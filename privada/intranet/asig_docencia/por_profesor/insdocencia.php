@@ -108,9 +108,9 @@ $cargamax=$_POST['cargamax'];
 /* Modificación incluida por jlmartin para gestionar las horas bajo umbral 
 y carga del rectorado 2/10/2018 */
 
-$cargarectorado=$_POST['cargarectorado'];
-$horasbajoumbral=$_POST['horasbajoumbral'];
-$horasbajoumbralmax=$_POST['horasbajoumbralmax'];
+ $cargarectorado=$_POST['cargarectorado'];
+// $horasbajoumbral=$_POST['horasbajoumbral'];
+// $horasbajoumbralmax=$_POST['horasbajoumbralmax'];
 
 /* Fin de la modificación incluida por jlmartin para gestionar las horas bajo umbral 
 y carga del rectorado 2/10/2018 */
@@ -122,7 +122,7 @@ if($cargamax>0)
     if($row_carga=mysql_fetch_array($resul_carga))
     {
 	//actualizamos
-	$sqlcarga="UPDATE cargas_max SET cargamax_total='$cargamax',carga_rectorado='$cargarectorado', horas_bajo_umbral='$horasbajoumbral',horas_bajo_umbral_max='$horasbajoumbralmax',situacion_academica='$situacion_academica' where curso='$curso' and nif='$cod_prof'";
+	$sqlcarga="UPDATE cargas_max SET cargamax_total='$cargamax',carga_rectorado='$cargarectorado', situacion_academica='$situacion_academica' where curso='$curso' and nif='$cod_prof'";
 	$resulcarga=mysql_query($sqlcarga,$link);
     }
 	
@@ -287,6 +287,8 @@ $ht1ec=$_POST["ht1ec0"];
 	 $resulhoras=mysql_query($sqlhoras,$link);
 
     }
+
+    //echo $sqlhoras;
 }
 
 
