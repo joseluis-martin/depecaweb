@@ -1,7 +1,7 @@
 <?php
 //require_once("../../../../core/bibliotecap.inc.php");
 require_once("../../../../core/bibliotecaint.inc.php");
-include("../../../../core/conexion.inc.php"); //Conexión con la base de datos
+include("../../../../core/conexion.inc.php"); //Conexiï¿½n con la base de datos
 arriba("", "asig_docencia", "es", "Asignaci&oacute;n de Docencia");
 
 
@@ -13,12 +13,11 @@ $titulacion=($_POST['titulacion']);
 $semestre=($_POST['semestre']);
 $nivel=($_POST['nivel']);
 $anio=($_POST['anio']);
-
+$unidad_docente=($_POST['unidad_docente']);
 $creditos=($_POST['creditos']);
 $cuatrimestre=($_POST['cuatrimestre']);
 $caracter=($_POST['caracter']);
 
-echo($creditos);
 
 if($caracter=='OBLIGATORIA')
 {
@@ -98,7 +97,12 @@ $sql = "SELECT codigo FROM asignaturas WHERE codigo='$codigo'";
 if ($titulacion==".")
 {
     $erro='1';
-    $error=$error."No ha introducido titulaci&oacute;n de asignatura <br>";
+    $error=$error."No ha introducido titulaci&oacute;n de la asignatura <br>";
+}
+if ($unidad_docente==".")
+{
+    $erro='1';
+    $error=$error."No ha introducido la unidad docente de la asignatura <br>";
 }
 if ($semestre=="")
 {
@@ -117,7 +121,7 @@ if ($semestre!="")
 if ($anio=="")
 {
     $erro='1';
-    $error=$error."No ha introducido año de la asignatura <br>";
+    $error=$error."No ha introducido aï¿½o de la asignatura <br>";
 }
 if ($creditos=="")
 {
@@ -147,28 +151,28 @@ $rowconsulta=mysql_fetch_array($resultconsulta);
 
 $codigo_titulacion=$rowconsulta['codigo'];
 
-$sql = "INSERT INTO asignaturas (abreviatura, codigo, nombre, nombre_en, codigo_titulacion, semestre, nivel, anio, titulacion, creditos, cuatrimestre, caracter, caracter_en,curso_academico,cod_dpto)";
+$sql = "INSERT INTO asignaturas (abreviatura, codigo, nombre, nombre_en, codigo_titulacion, semestre, nivel, anio, titulacion, unidad_docente, creditos, cuatrimestre, caracter, caracter_en,curso_academico,cod_dpto)";
 
-$sql .= " VALUES ('$abreviatura', '$codigo', '$nombre', '$nombre_en', '$codigo_titulacion', '$semestre', '$nivel', '$anio', '$titulacion', '$creditos', '$cuatrimestre', '$caracter','$caracter_en', '$curso_academico','$codigo_titulacion$codigo')";
+$sql .= " VALUES ('$abreviatura', '$codigo', '$nombre', '$nombre_en', '$codigo_titulacion', '$semestre', '$nivel', '$anio', '$titulacion', '$unidad_docente', '$creditos', '$cuatrimestre', '$caracter','$caracter_en', '$curso_academico','$codigo_titulacion$codigo')";
     
-echo($sql);    
+//echo($sql);    
 
 $resultado=mysql_query($sql, $link);
 
 
 if($es_clon=="No"){ //No es clon
 
-mkdir("/srv/www/htdocs/depeca/repositorio/asignaturas/$codigo",0777);
-system("chmod 777 /srv/www/htdocs/depeca/repositorio/asignaturas/$codigo");
-mkdir("/srv/www/htdocs/depeca/repositorio/documentos_profesores/$codigo",0777);
-system("chmod 777 /srv/www/htdocs/depeca/repositorio/documentos_profesores/$codigo");
+// mkdir("/srv/www/htdocs/depeca/repositorio/asignaturas/$codigo",0777);
+// system("chmod 777 /srv/www/htdocs/depeca/repositorio/asignaturas/$codigo");
+// mkdir("/srv/www/htdocs/depeca/repositorio/documentos_profesores/$codigo",0777);
+// system("chmod 777 /srv/www/htdocs/depeca/repositorio/documentos_profesores/$codigo");
 }else{ //Es clon
 
     $sql = "select * from clones where codigo=$clon_padre";
 
     $resultado=mysql_query($sql,$link);
 
-    if ($row = mysql_fetch_array($resultado)){ //Ya tenía algun clon
+    if ($row = mysql_fetch_array($resultado)){ //Ya tenï¿½a algun clon
 
 	insertarClon($codigo,$row["codigo_clon"]);
 
@@ -266,6 +270,7 @@ echo"<input name='nombre' type='hidden' value='".$nombre."'>";
 echo"<input name='nombre_en' type='hidden' value='".$nombre_en."'>";
 echo"<input name='codigo' type='hidden' value='".$codigo."'>";
 echo"<input name='titulacion' type='hidden' value='".$titulacion."'>";
+echo"<input name='unidad_docente' type='hidden' value='".$unidad_docente."'>";
 echo"<input name='semestre' type='hidden' value='".$semestre."'>";
 echo"<input name='nivel' type='hidden' value='".$nivel."'>";
 echo"<input name='anio' type='hidden' value='".$anio."'>";

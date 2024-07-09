@@ -1,6 +1,6 @@
 <?php
 require_once("../../../../core/bibliotecaint.inc.php");
-include("../../../../core/conexion.inc.php"); //Conexión con la base de datos
+include("../../../../core/conexion.inc.php"); //Conexiï¿½n con la base de datos
 arriba("", "asig_docencia", "es", "Asignaci&oacute;n de Docencia");
 
 
@@ -17,10 +17,11 @@ $anio=($_POST['anio']);
 $creditos=($_POST['creditos']);
 $cuatrimestre=($_POST['cuatrimestre']);
 $caracter=($_POST['caracter']);
+$unidad_docente=($_POST['unidad_docente']);
 $es_clon=($_POST['es_clon']);
 $clon_padre=($_POST['clon_padre']);
 
-/////////////////////Función que genera un desplegable en html a partir de un $result//////////////////////
+/////////////////////Funciï¿½n que genera un desplegable en html a partir de un $result//////////////////////
 ///////////////La tabla que se representa tiene que tener un campo nombre//////////////////////////////////
 
 
@@ -50,6 +51,37 @@ function generar_desplegable_titulacion($resultado,$desplegable,$titulacion)
 	?><option value="<?echo $row['nombre']?>"><?echo $row['nombre']; ?></option>
 	<?
 	$row=mysql_fetch_array($resultado);
+	}	
+	?>
+	</select>
+	<?
+}
+
+function generar_desplegable_unidad_docente($resultadoUD,$desplegable,$unidad_docente)
+{
+	//list($campo_pert,$elemento)=split("-",$nombre);
+	$numero_elementos=mysql_num_rows($resultadoUD);
+	$row=mysql_fetch_array($resultadoUD);
+	?>
+  
+	<select name="<?echo $desplegable?>" size="1">
+	<?
+	     if ($unidad_docente!="" && $unidad_docente!=".")
+	     {
+		 echo "prueba";
+		 echo '<option selected value="'.$unidad_docente.'">'.$unidad_docente.'</option>';
+	     }
+	     else
+	     {
+	     
+		 echo '<option selected value=".">Seleccione</option>';
+	     }
+
+	for($i=0;$i<$numero_elementos;$i++)
+	{
+	?><option value="<?echo $row['id']?>"><?echo $row['nombre']; ?></option>
+	<?
+	$row=mysql_fetch_array($resultadoUD);
 	}	
 	?>
 	</select>
@@ -91,10 +123,10 @@ function generar_desplegable_clon($resultado,$desplegable,$clon_padre)
 $link = Conectarse();
 
 $sql = "select * from carreras order by codigo";
+$sqlUD = "select * from unidades_docentes order by id";
 
 $resultado = mysql_query($sql, $link);
-
-
+$resultadoUD = mysql_query($sqlUD, $link);
 
 ?>
 
@@ -152,7 +184,7 @@ else
       
 
       <tr align='left'> 
-        <td width="13%"><font size="2" face="Arial" color="#0066CC"><b>Nombre Inglés</b></font></td>
+        <td width="13%"><font size="2" face="Arial" color="#0066CC"><b>Nombre Ingl&eacute;s</b></font></td>
 	 <?
 	  if ($nombre_en!='')
 {
@@ -177,6 +209,17 @@ else
 	</span> </td>
          
       </tr>
+
+
+      <tr align='left'> 
+        
+        <td width="13%"><span class=general><h3>Unidad Docente</h3></span></td> 
+            <td width="87%">
+        <span class=general><input type="hidden" name="unidad_docente" id='unidad_docente'><? generar_desplegable_unidad_docente($resultadoUD,"unidad_docente",$unidad_docente); ?>
+        </span> </td>
+             
+          </tr>
+
       
       <tr align='left'> 
         <td width="13%"><font size="2" face="Arial" color="#0066CC"><b>Semestre</b></font></td>
@@ -209,8 +252,8 @@ else
     echo '<option selected value="1">1er ciclo</option>';
 }
 ?>
-            <option value="2">2º ciclo</option>
-	    <option value="12">1er y 2º ciclo</option>
+            <option value="2">2o ciclo</option>
+	    <option value="12">1er y 2o ciclo</option>
             <option value="doctorado">Doctorado</option>
             <option value="propios">Estudios Propios</option>
 	    <option value="postgrado">Postgrado</option>
@@ -267,7 +310,7 @@ else
     echo '<option selected value="1"><b>1er Cuatrimestre</b></option>';
 		}
 ?>
-            <option value="2">2º Cuatrimestre</option>
+            <option value="2">2o Cuatrimestre</option>
             <option value="0">Anual</option>
           </select>
           </font></td>
@@ -290,7 +333,7 @@ else
 	     }
 ?>
 	<option value="TRONCAL">Troncal</option>
-	<option value="BÁSICA">B&aacute;sica</option>
+	<option value="BASICA">B&aacute;sica</option>
 	<option value="OPTATIVA">Optativa</option>
 	<option value="LIBRE">Libre Elecci&oacute;n</option>
         <option value="COMPLEMENTO">Complemento Formativo</option>
