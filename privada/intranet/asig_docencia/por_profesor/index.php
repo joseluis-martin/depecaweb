@@ -1,6 +1,5 @@
 <?php
 
-
 require_once("../../../core/bibliotecaint.inc.php");
 include("../../../core/conexion.inc.php"); //Conexión con la base de datos
 arriba("", "asig_docencia", "es", "Asignaci&oacute;n de Docencia");
@@ -36,123 +35,59 @@ else
 
 function calcular_carga_media($curso)
 {
-$link=Conectarse();
-$sql_cargas = "select * from cargas_max where curso='$curso'";	    
-$resul_cargas = mysql_query($sql_cargas, $link);
-$suma_cargas=0;
-while ($row_cargas = mysql_fetch_array($resul_cargas))
-{
-    $ni=$row_cargas["nif"];
-    $sql_aux="SELECT * FROM cargas_max where nif='$ni' and curso='$curso'";
-    $resul_aux=mysql_query($sql_aux,$link);
-    $row_aux=mysql_fetch_array($resul_aux);
-     if ($row_aux["situacion_academica"]=="ACTIVO")
-    {
-    $suma_cargas=$suma_cargas+$row_cargas['cargamax_total'];
-    }
-}
-	
-$sql_horas="SELECT
-cod_asig,curso,HT1C_totales,HL1C_totales,HT2C_totales,HL2C_totales,
-HEJ1C_totales, HEJ2C_totales,HT1EC_totales,HL1EC_totales,HT2EC_totales,
-HL2EC_totales,HEJ1EC_totales,HEJ2EC_totales FROM horas_docencia WHERE cod_asig
-IN (SELECT codigo FROM asignaturas WHERE (semestre<5 AND codigo_titulacion = 'G37') OR (semestre>4 AND (codigo_titulacion = 'G35' OR codigo_titulacion = 'G37' OR
-codigo_titulacion = 'G38' OR codigo_titulacion = 'G39')) OR codigo_titulacion =
-'G430' OR codigo_titulacion = 'G60' OR codigo_titulacion = 'G652'
- OR codigo_titulacion = 'M076'  OR codigo_titulacion = 'M125' OR codigo_titulacion = 'M141 'OR
-codigo_titulacion = '00' OR codigo_titulacion = '01' OR 
-codigo_titulacion = '02' OR codigo_titulacion = 'M888' OR codigo_titulacion = 'M180' OR codigo_titulacion = 'G591' OR codigo_titulacion = 'G781' OR codigo_titulacion =
-'G610' OR codigo_titulacion ='G653') AND curso = '$curso'";
+		
+	$link=Conectarse();
+
+	//$sql_cargas = "select * from cargas_max where curso='$curso'";	    
+	//$resul_cargas = mysql_query($sql_cargas, $link);
+	//$suma_cargas=0;
+	//while ($row_cargas = mysql_fetch_array($resul_cargas))
+	//{
+	//    $ni=$row_cargas["nif"];
+	//    $sql_aux="SELECT * FROM cargas_max where nif='$ni' and curso='$curso'";
+	//    $resul_aux=mysql_query($sql_aux,$link);
+	//    $row_aux=mysql_fetch_array($resul_aux);
+	//     if ($row_aux["situacion_academica"]=="ACTIVO")
+	//    {
+	//    $suma_cargas=$suma_cargas+$row_cargas['cargamax_total'];
+	//    }
+	//}
+
+	$sql_cargas = "select SUM(h.cargamax_total) AS total_cantidad FROM personal p JOIN cargas_max h ON p.nif = h.nif WHERE h.situacion_academica = 'ACTIVO' AND h.curso = '$curso'";
+	$resul_cargas = mysql_query($sql_cargas, $link);
+	$row_cargas = mysql_fetch_array($resul_cargas);
+	$suma_cargas = $row_cargas['total_cantidad'];
+
+	$sql_horas="SELECT
+	cod_asig,curso,HT1C_totales,HL1C_totales,HT2C_totales,HL2C_totales,
+	HEJ1C_totales, HEJ2C_totales,HT1EC_totales,HL1EC_totales,HT2EC_totales,
+	HL2EC_totales,HEJ1EC_totales,HEJ2EC_totales FROM horas_docencia WHERE cod_asig
+	IN (SELECT codigo FROM asignaturas WHERE (semestre<5 AND codigo_titulacion = 'G37') OR (semestre>4 AND (codigo_titulacion = 'G35' OR codigo_titulacion = 'G37' OR
+	codigo_titulacion = 'G38' OR codigo_titulacion = 'G39')) OR codigo_titulacion =
+	'G430' OR codigo_titulacion = 'G60' OR codigo_titulacion = 'G652'
+	OR codigo_titulacion = 'M076'  OR codigo_titulacion = 'M125_1' OR codigo_titulacion = 'M141 'OR
+	codigo_titulacion = '00' OR codigo_titulacion = '01' OR 
+	codigo_titulacion = '02' OR codigo_titulacion = 'M180' OR codigo_titulacion = 'G591' OR codigo_titulacion = 'G781' OR codigo_titulacion =
+	'G610' OR codigo_titulacion ='G653') AND curso = '$curso'";
 
 
-$resul_horas = mysql_query($sql_horas, $link);
-$suma_horas=0;
-while ($row_horas = mysql_fetch_array($resul_horas))
-{
-    /*$ht1c=$row_horas['HT1C'];
-    $hl1c=$row_horas['HL1C'];
-    $ht2c=$row_horas['HT2C'];
-    $hl2c=$row_horas['HL2C'];
-    $hej1c=$row_horas['HEJ1C'];
-    $hej2c=$row_horas['HEJ2C'];
-    $ht1ec=$row_horas['HT1EC'];
-    $hl1ec=$row_horas['HL1EC'];
-    $ht2ec=$row_horas['HT2EC'];
-    $hl2ec=$row_horas['HL2EC'];
-    $hej1ec=$row_horas['HEJ1EC'];
-    $hej2ec=$row_horas['HEJ2EC'];*/
-    
-    $ht1c=$row_horas['HT1C_totales'];
-    $hl1c=$row_horas['HL1C_totales'];
-    $ht2c=$row_horas['HT2C_totales'];
-    $hl2c=$row_horas['HL2C_totales'];
-    $hej1c=$row_horas['HEJ1C_totales'];
-    $hej2c=$row_horas['HEJ2C_totales'];
-    $ht1ec=$row_horas['HT1EC_totales'];
-    $hl1ec=$row_horas['HL1EC_totales'];
-    $ht2ec=$row_horas['HT2EC_totales'];
-    $hl2ec=$row_horas['HL2EC_totales'];
-    $hej1ec=$row_horas['HEJ1EC_totales'];
-    $hej2ec=$row_horas['HEJ2EC_totales'];
-    $suma_horas=$suma_horas+$ht1c+$hl1c+$ht2c+$hl2c+$hej1c+$hej2c+$ht1ec+$hl1ec+$ht2ec+$hl2ec+$hej1ec+$hej2ec;       
-}
-$carga_media=round(($suma_horas/$suma_cargas)*100,2);
-return $carga_media;
-}
-
-/* Añadido por jlmartin para calcular la carga media del Dpto. según Rectorado 03/10/2018 */
-
-function calcular_carga_media_rect($curso)
-{
-$link=Conectarse();
-$sql_cargas = "select * from cargas_max where curso='$curso'";	    
-$resul_cargas = mysql_query($sql_cargas, $link);
-$suma_cargas=0;
-while ($row_cargas = mysql_fetch_array($resul_cargas))
-{
-    $ni=$row_cargas["nif"];
-    $sql_aux="SELECT * FROM cargas_max where nif='$ni' and curso='$curso'";
-    $resul_aux=mysql_query($sql_aux,$link);
-    $row_aux=mysql_fetch_array($resul_aux);
-     if ($row_aux["situacion_academica"]=="ACTIVO")
-    {
-    $suma_cargas=$suma_cargas+$row_cargas['carga_rectorado'];
-    }
-}
-
-$sql_horas="SELECT
-cod_asig,curso,HT1C_totales,HL1C_totales,HT2C_totales,HL2C_totales,
-HEJ1C_totales, HEJ2C_totales,HT1EC_totales,HL1EC_totales,HT2EC_totales,
-HL2EC_totales,HEJ1EC_totales,HEJ2EC_totales FROM horas_docencia WHERE cod_asig
-IN (SELECT codigo FROM asignaturas WHERE (semestre<5 AND codigo_titulacion = 'G37') OR (semestre>4 AND (codigo_titulacion = 'G35' OR codigo_titulacion = 'G37' OR
-codigo_titulacion = 'G38' OR codigo_titulacion = 'G39')) OR codigo_titulacion =
-'G430' OR codigo_titulacion = 'G60' OR codigo_titulacion = 'G652'
- OR codigo_titulacion = 'M076'  OR codigo_titulacion = 'M125' OR codigo_titulacion = 'M141 'OR
-codigo_titulacion = '00' OR codigo_titulacion = '01' OR 
-codigo_titulacion = '02' OR codigo_titulacion = 'M888' OR codigo_titulacion = 'M180' OR codigo_titulacion = 'G591' OR codigo_titulacion = 'G781' OR codigo_titulacion =
-'G610' OR codigo_titulacion ='G653') AND curso = '$curso'";
-
-
-$resul_horas = mysql_query($sql_horas, $link);
-$suma_horas=0;
-while ($row_horas = mysql_fetch_array($resul_horas))
-{
-    /*$ht1c=$row_horas['HT1C'];
-    $hl1c=$row_horas['HL1C'];
-    $ht2c=$row_horas['HT2C'];
-    $hl2c=$row_horas['HL2C'];
-    $hej1c=$row_horas['HEJ1C'];
-    $hej2c=$row_horas['HEJ2C'];
-    $ht1ec=$row_horas['HT1EC'];
-    $hl1ec=$row_horas['HL1EC'];
-    $ht2ec=$row_horas['HT2EC'];
-    $hl2ec=$row_horas['HL2EC'];
-    $hej1ec=$row_horas['HEJ1EC'];
-    $hej2ec=$row_horas['HEJ2EC'];*/
-	
-	$cod_asig=$row_horas['cod_asig'];
-	if (($cod_asig>19)||($cod_asig==13)){
-    
+	$resul_horas = mysql_query($sql_horas, $link);
+	$suma_horas=0;
+	while ($row_horas = mysql_fetch_array($resul_horas))
+	{
+		/*$ht1c=$row_horas['HT1C'];
+		$hl1c=$row_horas['HL1C'];
+		$ht2c=$row_horas['HT2C'];
+		$hl2c=$row_horas['HL2C'];
+		$hej1c=$row_horas['HEJ1C'];
+		$hej2c=$row_horas['HEJ2C'];
+		$ht1ec=$row_horas['HT1EC'];
+		$hl1ec=$row_horas['HL1EC'];
+		$ht2ec=$row_horas['HT2EC'];
+		$hl2ec=$row_horas['HL2EC'];
+		$hej1ec=$row_horas['HEJ1EC'];
+		$hej2ec=$row_horas['HEJ2EC'];*/
+		
 		$ht1c=$row_horas['HT1C_totales'];
 		$hl1c=$row_horas['HL1C_totales'];
 		$ht2c=$row_horas['HT2C_totales'];
@@ -165,11 +100,89 @@ while ($row_horas = mysql_fetch_array($resul_horas))
 		$hl2ec=$row_horas['HL2EC_totales'];
 		$hej1ec=$row_horas['HEJ1EC_totales'];
 		$hej2ec=$row_horas['HEJ2EC_totales'];
-		$suma_horas=$suma_horas+$ht1c+$hl1c+$ht2c+$hl2c+$hej1c+$hej2c+$ht1ec+$hl1ec+$ht2ec+$hl2ec+$hej1ec+$hej2ec;   
+		$suma_horas=$suma_horas+$ht1c+$hl1c+$ht2c+$hl2c+$hej1c+$hej2c+$ht1ec+$hl1ec+$ht2ec+$hl2ec+$hej1ec+$hej2ec;       
 	}
+	$carga_media=round(($suma_horas/$suma_cargas)*100,2);
+	echo $suma_cargas;
+	return $carga_media;
 }
-$carga_media_rect=round(($suma_horas/$suma_cargas)*100,2);
-return $carga_media_rect;
+
+/* Añadido por jlmartin para calcular la carga media del Dpto. según Rectorado 03/10/2018 */
+
+function calcular_carga_media_rect($curso)
+{
+	$link=Conectarse();
+
+	// $sql_cargas = "select * from cargas_max where curso='$curso'";	    
+	// $resul_cargas = mysql_query($sql_cargas, $link);
+	// $suma_cargas=0;
+	// while ($row_cargas = mysql_fetch_array($resul_cargas))
+	// {
+	//     $ni=$row_cargas["nif"];
+	//     $sql_aux="SELECT * FROM cargas_max where nif='$ni' and curso='$curso'";
+	//     $resul_aux=mysql_query($sql_aux,$link);
+	//     $row_aux=mysql_fetch_array($resul_aux);
+	//      if ($row_aux["situacion_academica"]=="ACTIVO")
+	//     {
+	//     $suma_cargas=$suma_cargas+$row_cargas['carga_rectorado'];
+	//     }
+	// }
+
+	$sql_cargas = "select SUM(h.carga_rectorado) AS total_cantidad FROM personal p JOIN cargas_max h ON p.nif = h.nif WHERE h.situacion_academica = 'ACTIVO' AND h.curso = '$curso'";
+	$resul_cargas = mysql_query($sql_cargas, $link);
+	$row_cargas = mysql_fetch_array($resul_cargas);
+	$suma_cargas = $row_cargas['total_cantidad'];
+
+	$sql_horas="SELECT
+	cod_asig,curso,HT1C_totales,HL1C_totales,HT2C_totales,HL2C_totales,
+	HEJ1C_totales, HEJ2C_totales,HT1EC_totales,HL1EC_totales,HT2EC_totales,
+	HL2EC_totales,HEJ1EC_totales,HEJ2EC_totales FROM horas_docencia WHERE cod_asig
+	IN (SELECT codigo FROM asignaturas WHERE (semestre<5 AND codigo_titulacion = 'G37') OR (semestre>4 AND (codigo_titulacion = 'G35' OR codigo_titulacion = 'G37' OR
+	codigo_titulacion = 'G38' OR codigo_titulacion = 'G39')) OR codigo_titulacion =
+	'G430' OR codigo_titulacion = 'G60' OR codigo_titulacion = 'G652'
+	OR codigo_titulacion = 'M076'  OR codigo_titulacion = 'M125' OR codigo_titulacion = 'M141 'OR
+	codigo_titulacion = '00' OR codigo_titulacion = '01' OR 
+	codigo_titulacion = '02' OR codigo_titulacion = 'M888' OR codigo_titulacion = 'M180' OR codigo_titulacion = 'G591' OR codigo_titulacion = 'G781' OR codigo_titulacion =
+	'G610' OR codigo_titulacion ='G653') AND curso = '$curso'";
+
+
+	$resul_horas = mysql_query($sql_horas, $link);
+	$suma_horas=0;
+	while ($row_horas = mysql_fetch_array($resul_horas))
+	{
+		/*$ht1c=$row_horas['HT1C'];
+		$hl1c=$row_horas['HL1C'];
+		$ht2c=$row_horas['HT2C'];
+		$hl2c=$row_horas['HL2C'];
+		$hej1c=$row_horas['HEJ1C'];
+		$hej2c=$row_horas['HEJ2C'];
+		$ht1ec=$row_horas['HT1EC'];
+		$hl1ec=$row_horas['HL1EC'];
+		$ht2ec=$row_horas['HT2EC'];
+		$hl2ec=$row_horas['HL2EC'];
+		$hej1ec=$row_horas['HEJ1EC'];
+		$hej2ec=$row_horas['HEJ2EC'];*/
+		
+		$cod_asig=$row_horas['cod_asig'];
+		if (($cod_asig>19)||($cod_asig==13)){
+		
+			$ht1c=$row_horas['HT1C_totales'];
+			$hl1c=$row_horas['HL1C_totales'];
+			$ht2c=$row_horas['HT2C_totales'];
+			$hl2c=$row_horas['HL2C_totales'];
+			$hej1c=$row_horas['HEJ1C_totales'];
+			$hej2c=$row_horas['HEJ2C_totales'];
+			$ht1ec=$row_horas['HT1EC_totales'];
+			$hl1ec=$row_horas['HL1EC_totales'];
+			$ht2ec=$row_horas['HT2EC_totales'];
+			$hl2ec=$row_horas['HL2EC_totales'];
+			$hej1ec=$row_horas['HEJ1EC_totales'];
+			$hej2ec=$row_horas['HEJ2EC_totales'];
+			$suma_horas=$suma_horas+$ht1c+$hl1c+$ht2c+$hl2c+$hej1c+$hej2c+$ht1ec+$hl1ec+$ht2ec+$hl2ec+$hej1ec+$hej2ec;   
+		}
+	}
+	$carga_media_rect=round(($suma_horas/$suma_cargas)*100,2);
+	return $carga_media_rect;
 }
 
 /* Fin del añadido por jlmartin para calcular la carga media del Dpto. según Rectorado 03/10/2018 */

@@ -247,7 +247,7 @@ if($curso!='' && $curso!='undefined')
 	  
       <tr><td><hr></td></tr>
       <tr><td><p align="center"><a style="text-decoration:none" href="./por_profesor/indexquick.php?valor2=<?echo $curso?>"><font size="2" face="Arial" color="#CC6900"><b>En pruebas: Asignaci&oacute;n docencia por profesor</b></font></a></td> </tr>
-
+      <tr><td><p align="center"><a style="text-decoration:none" href="./por_profesor/horas_grado.php?valor2=<?echo $curso?>"><font size="2" face="Arial" color="#CC6900"><b>En pruebas: Carga por grado</b></font></a></td> </tr>
 
       <?}?>
 																																							     </table>																		   <br><br>
