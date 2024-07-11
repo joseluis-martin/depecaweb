@@ -1,6 +1,0 @@
-<?php
-require_once("../../../../core/bibliotecaint.inc.php");
-include("../../../../core/conexion.inc.php"); //Conexión con la base de datos
-arriba("", "asig_docencia", "es", "Asignaci&oacute;n de Docencia");
-$link=Conectarse();
-?>
