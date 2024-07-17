@@ -6,48 +6,33 @@ arriba("", "asig_docencia", "es", "Asignaci&oacute;n de Docencia");
 
 <html>
 <head>
-<title>Docencia Privada</title>
+    <title>Docencia Privada</title>
 </head>
 
 
 <BODY>
 
 <?php
+
+$curso=$_POST['curso'];
+
 $nombre=$_POST['nombre'];
 $apellidos=$_POST['apellidos'];
 $iniciales=$_POST['iniciales'];
-$puesto=$_POST['puesto'];
 $email=$_POST['email'];
 $usuario=strtok($email,'@');
-$centro=$_POST['centro'];
-$departamento=$_POST['departamento'];
-$cargo=$_POST['cargo'];
-
-
-$direccion=$_POST['direccion'];
-$domicilio=$_POST['domicilio'];
+$nif=$_POST['nif'];
 $telefono_universidad=$_POST['telefono_universidad'];
 if($telefono_universidad =="")
 {
     $telefono_universidad="6540";
 }
-$telefono_particular=$_POST['telefono_particular'];
-$fax=$_POST['fax'];
-if($fax =="")
-{
-    $fax="+34 918856591";
-}
 $despacho=$_POST['despacho'];
-$nrp=$_POST['nrp'];
-$nif=$_POST['nif'];
-$codigo_plaza=$_POST['codigo_plaza'];
-$numero=$_POST['numero'];
+$cargo=$_POST['cargo'];
+$puesto=$_POST['puesto'];
 
 $falta_cuerpo=$_POST['falta_cuerpo'];
 $falta_univ=$_POST['falta_univ'];
-$sexo=$_POST['sexo'];
-$fecha_nacimiento=$_POST['fecha_nacimiento'];
-
 
 $namefoto = $_FILES['userfile']['name'];
 $foto = "/fotos/personal/".$namefoto."";
@@ -77,21 +62,62 @@ if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile) ) {
 
 $link = Conectarse();
 
-$sql = "INSERT INTO personal (nombre, apellidos, iniciales, puesto, email, usuario,centro, departamento, cargo, foto, direccion, domicilio, telefono_universidad, telefono_particular, fax, despacho, nrp, nif,codigo_plaza,falta_cuerpo, falta_univ, sexo, fecha_nacimiento)";
+// Verificar si el NIF ya existe en la tabla personal
+$sql_check_personal = "SELECT nif FROM personal WHERE nif = '$nif'";
+$result_personal = mysql_query($sql_check_personal, $link);
+if (mysql_num_rows($result_personal) > 0) {
+    echo "Error: El NIF ya existe en la tabla personal.";
+    mysql_close($link);
+    exit;
+}
 
-$sql .= "VALUES ('$nombre', '$apellidos', '$iniciales', '$puesto', '$email', '$usuario', '$centro', '$departamento', '$cargo', '$foto', '$direccion', '$domicilio', '$telefono_universidad', '$telefono_particular', '$fax', '$despacho', '$nrp', '$nif', '$codigo_plaza', '$falta_cuerpo', '$falta_univ', '$sexo', '$fecha_nacimiento')";
-echo $sql;
+// Verificar si el NIF ya existe en la tabla cargas_max
+$sql_check_cargas_max = "SELECT nif FROM cargas_max WHERE nif = '$nif'";
+$result_cargas_max = mysql_query($sql_check_cargas_max, $link);
+if (mysql_num_rows($result_cargas_max) > 0) {
+    echo "Error: El NIF ya existe en la tabla cargas_max.";
+    mysql_close($link);
+    exit;
+}
+
+$sql = "INSERT INTO personal (nombre, apellidos, iniciales, puesto, email, usuario, cargo, foto, telefono_universidad, despacho,  nif, falta_cuerpo, falta_univ)";
+$sql .= "VALUES ('$nombre', '$apellidos', '$iniciales', '$puesto', '$email', '$usuario',  '$cargo', '$foto',  '$telefono_universidad', '$despacho',  '$nif',  '$falta_cuerpo', '$falta_univ')";
+
 
 //$result = mysql_query($sql);
 
 echo $sql;
+
+// Si hay campos adicionales, insertarlos en la tabla cargas_max
+if (isset($_POST['mostrar_campos_adicionales'])) {
+    $cargamax = $_POST['cargamax'];
+    $cargamax_rect = $_POST['cargamax_rect'];
+    $situacion_academica = $_POST['situacion_academica'];
+    $unidad_docente = $_POST['unidad_docente'];
+    
+
+    //$sql_adicional = "INSERT INTO cargas_max (nif, cargamax, cargamax_rect, situacion_academica, curso, unidad_docente_id) 
+    //                    VALUES ('$nif', '$cargamax_total', '$carga_rectorado', '$situacion_academica', '$curso', '$unidad_docente')";
+
+    $sql_adicional = "INSERT INTO cargas_max (nif, cargamax_total, carga_rectorado, situacion_academica, curso) 
+                        VALUES ('$nif', '$cargamax', '$cargamax_rect', '$situacion_academica', '$curso')";
+
+    // if (!mysql_query($sql_adicional, $link)) {
+    //     echo "Error al insertar los datos adicionales: " . mysql_error($link);
+    // }
+
+    echo $sql_adicional;
+}
+
+
+
+    mysql_close($link);
 
 echo "<div align='center'>\n";
    echo " <h3>Informaci&oacute;n A&ntilde;adida</font></h3>\n";
    echo "<br><br> \n";
  echo " <span class='generalbluebold'>&lt;&lt;</span> <a href='../../index.php' class='generalbluebold'>Volver</a> \n";
 echo "</div>\n";
-
 
 
 ?>

@@ -2,6 +2,9 @@
 require_once("../../../../core/bibliotecaint.inc.php");
 include("../../../../core/conexion.inc.php"); //Conexi�n con la base de datos
 arriba("", "asig_docencia", "es", "Asignaci&oacute;n de Docencia");
+
+$curso = $_GET['valor2'];
+
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +86,7 @@ arriba("", "asig_docencia", "es", "Asignaci&oacute;n de Docencia");
 <body>
 
 <p><font color="#0073B4" face="Arial"><strong>INTRODUCIR DATOS</strong></font></p>
-  <form  name="formpersonal" method="post" action="inspersonal.php" enctype="multipart/form-data">
+  <form  name="formpersonal" method="post" action="inspersonal_new.php" enctype="multipart/form-data">
     <div>
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" size="40" required>
